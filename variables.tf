@@ -1,33 +1,33 @@
-variable "vpc_cidr" {
-    description = "CIDR block for the VPC"
-    type = string
-}
-
-variable "availability_zones" {
-    description = "List of availability zones for the VPC"
-    type = list(string)
-  
-}
-
-variable "private_subnet_cidrs" {
-    description = "CIDR blocks for the private subnets"
-    type = list(string)
-  
-}
-
-variable "public_subnet_cidrs" {
-    description = "CIDR blocks for the public subnets"
-    type = list(string)
-}
 
 variable "cluster_name" {
-    description = "name of the EKS cluster"
-    type = string
+  description = "Name of the EKS cluster"
+  type        = string
 }
 
-variable "nat_gateway_count" {
-  description = "Number of NAT gateways to create"
-  type        = number
-  default     = 1
+variable "cluster_version" {
+  description = "Kubernetes version"
+  type        = string
 }
 
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
+
+variable "subnet_ids" {
+  description = "Subnet IDs"
+  type        = list(string)
+}
+
+variable "node_groups" {
+  description = "EKS node group configuration"
+  type = map(object({
+    instance_types = list(string)
+    capacity_type  = string
+    scaling_config = object({
+      desired_size = number
+      max_size     = number
+      min_size     = number
+    })
+  }))
+}
